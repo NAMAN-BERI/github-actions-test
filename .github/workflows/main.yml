@@ -1,8 +1,9 @@
-name: 23f2003717@ds.study.iitm.ac.in
+name: Regular Commit
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Runs at 00:00 UTC every day
+    - cron: '0 0 * * *'  # Runs daily at 00:00 UTC
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   commit:
@@ -13,14 +14,14 @@ jobs:
 
       - name: Update Content
         run: |
-          echo "Daily update on $(date)" >> daily_update.txt
+          echo "Update on $(date)" >> update_log.txt
 
       - name: Commit Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add daily_update.txt
-          git commit -m "Daily update on $(date)"
+          git add update_log.txt
+          git commit -m "Update on $(date)"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
